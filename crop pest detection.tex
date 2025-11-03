@@ -1,0 +1,139 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{fancyhdr}
+\usepackage{setspace}
+\usepackage{titlesec}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{minted} % for code formatting
+
+% Page style
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{Crop Disease Detection \& Prediction}
+\fancyhead[R]{Cassiel L.}
+\fancyfoot[C]{\thepage}
+
+% Section styling
+\titleformat{\section}{\large\bfseries\color{olive}}{}{0em}{}
+\titleformat{\subsection}{\bfseries\color{teal}}{}{0em}{}
+
+% Document
+\begin{document}
+\begin{titlepage}
+\centering
+\vspace*{2cm}
+{\Huge\bfseries Individual Report \\[0.3em]
+\textcolor{olive}{Crop Disease Detection and Prediction Project} \par}
+\vspace{2cm}
+{\Large\bfseries Member: Cassiel L. \\[0.5em]
+
+Roll No.: \texttt{24P0051006}}
+\vfill
+{\large \textbf{Institute:} Goa University}
+\end{titlepage}
+
+\onehalfspacing
+
+\section{Introduction}
+The \textbf{Crop Disease Detection and Prediction} project aims to integrate weather-based data and image recognition to detect crop diseases early.  
+This multi-phase system helps farmers monitor crop health and predict disease risk based on both \textit{environmental} and \textit{visual} cues.  
+My contribution focused on the \textbf{Weather API Integration and Predictive Model Training} module.
+
+\section{Objective}
+The key objective of my component was to:
+\begin{itemize}
+    \item Collect real-time weather data using the \textbf{OpenWeatherMap API}.
+    \item Process and label this data for machine learning.
+    \item Train a \textbf{Random Forest Classifier} to predict disease-conducive conditions.
+    \item Save and manage data within Google Drive and GitHub.
+\end{itemize}
+
+\section{Tools and Technologies Used}
+\begin{itemize}
+    \item \textbf{Language:} Python
+    \item \textbf{Libraries:} pandas, requests, sklearn, joblib
+    \item \textbf{Platform:} Google Colab linked with GitHub
+    \item \textbf{API:} OpenWeatherMap (Real-time weather data)
+\end{itemize}
+
+\section{Methodology}
+
+\subsection{Data Collection}
+Weather data was fetched for six Indian cities: \textit{Panaji, Mumbai, Delhi, Chennai, Kolkata, and Pune}.  
+The OpenWeatherMap API provided live data on temperature, humidity, rainfall, pressure, and wind speed.
+
+A sample request looked like:
+\begin{minted}[fontsize=\footnotesize, bgcolor=gray!5, frame=single]{python}
+url = f"https://api.openweathermap.org/data/2.5/weather?q={city},I
+N&appid={API_KEY}&units=metric"
+r = requests.get(url).json()
+\end{minted}
+
+The conditions were then labeled:
+\begin{quote}
+If humidity $>$ 80\% and $20^\circ$C $\leq$ temperature $\leq 35^\circ$C and rainfall $>$ 2mm  
+$\Rightarrow$ Label as \textbf{High Risk (1)}, else \textbf{Low Risk (0)}.
+\end{quote}
+
+\subsection{Model Training}
+The collected dataset was stored as:
+\begin{verbatim}
+/content/drive/MyDrive/crop_project/data/weather_dataset.csv
+\end{verbatim}
+
+A Random Forest model was trained using:
+\begin{minted}[fontsize=\footnotesize, bgcolor=gray!5, frame=single]{python}
+X = df[["temp", "humidity", "rainfall", "pressure", "wind_speed"]]
+y = df["label"]
+
+model = RandomForestClassifier()
+model.fit(X, y)
+\end{minted}
+
+The trained model was then saved as:
+\begin{verbatim}
+/content/drive/MyDrive/crop_project/models/weather_model.pkl
+\end{verbatim}
+
+\subsection{Integration}
+The weather model forms the analytical foundation for environmental risk detection.  
+Its predictions can be combined with the CNN-based image analysis module to form a hybrid prediction system.
+
+\section{Results}
+\begin{itemize}
+    \item Successfully collected real-time weather data for multiple locations.
+    \item Generated and saved dataset with seven key parameters.
+    \item Trained and exported a reliable Random Forest model.
+    \item Pushed model and dataset to GitHub under the \texttt{Cassiel} branch.
+\end{itemize}
+
+\section{Challenges Faced}
+\begin{itemize}
+    \item Handling API rate limits and missing data responses.
+    \item Managing file paths between Colab, Drive, and GitHub.
+    \item Ensuring consistent data formats during live collection.
+\end{itemize}
+
+\section{Conclusion}
+The weather-based prediction model successfully identifies favorable conditions for crop diseases.  
+When combined with the CNN visual detection model, the project offers a powerful and holistic system for smart agriculture.
+
+\section{Individual Learning Outcomes}
+\begin{itemize}
+    \item Learned how to use and authenticate public APIs.
+    \item Understood real-time data processing in machine learning workflows.
+    \item Enhanced version control skills using Git and GitHub.
+    \item Improved understanding of environmental influence on crop health.
+\end{itemize}
+
+\vfill
+\begin{center}
+\textbf{--- End of Report ---}
+\end{center}
+
+\end{document}
+
