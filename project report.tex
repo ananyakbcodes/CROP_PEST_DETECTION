@@ -1,0 +1,95 @@
+\documentclass[12pt,a4paper]{report}
+\usepackage{graphicx}
+\usepackage{setspace}
+\usepackage{geometry}
+\geometry{left=1in,right=1in,top=1in,bottom=1in}
+\usepackage{times}
+
+\begin{document}
+\begin{titlepage}
+\centering
+{\Large \textbf{Crop Disease Detection \& Risk Prediction System}}\\[1.5cm]
+{\large Submitted by}\\[0.3cm]
+{\Large \textbf{Aaliyah Sheikh}}\\[1.5cm]
+\vfill
+\end{titlepage}
+
+\chapter*{Abstract}
+Agriculture plays a crucial role in food security and the global economy. However, plant diseases significantly reduce crop yield and quality. This project presents a system that detects crop diseases using Convolutional Neural Networks (CNN) and predicts the risk of disease occurrence based on weather conditions using a machine learning model. The system integrates image-based disease classification with weather-based risk assessment to assist farmers in taking early preventive actions.
+
+\tableofcontents
+\newpage
+
+\chapter{Introduction}
+Plant diseases are a major barrier to sustainable agricultural productivity. Traditional methods of disease detection require expert knowledge and are often time-consuming. With advancements in machine learning, automated disease detection has become possible using image analysis. Additionally, weather conditions such as temperature, humidity, and rainfall significantly influence the likelihood of disease outbreaks.
+
+This project focuses on developing a two-stage intelligent system:
+\begin{enumerate}
+\item \textbf{Disease Classification Model (CNN)} — Detects the type of disease from a plant leaf image.
+\item \textbf{Weather-Based Risk Prediction Model (Random Forest)} — Predicts whether the disease risk is ``High'' or ``Low'' using climatic parameters.
+\end{enumerate}
+
+\chapter{System Architecture}
+The system follows the pipeline below:
+\begin{enumerate}
+\item Collect plant leaf images from dataset.
+\item Preprocess and resize images.
+\item Train CNN model for disease classification.
+\item Create or collect weather dataset for disease conditions.
+\item Train machine learning model (Random Forest) for risk prediction.
+\item Integrate both models and provide final disease + risk output.
+\end{enumerate}
+
+\chapter{Dataset Description}
+\textbf{Image Dataset:}  
+Plant leaf images obtained from Kaggle. The dataset contains healthy and diseased leaves categorized by labels.
+
+\textbf{Weather Dataset:}  
+A structured dataset containing temperature, humidity, rainfall, pressure, and wind speed. The label indicates risk as high or low. A Random Forest classifier was trained on this dataset.
+
+\chapter{Model Development}
+\section{CNN Disease Classification}
+A Transfer Learning approach using MobileNetV2 was used due to its efficiency. Images were resized to 128×128 and normalized before training. The final output layer used Softmax activation for class probability prediction.
+
+\section{Weather Risk Prediction Model}
+A Random Forest model was trained on weather parameters. The model outputs whether current weather conditions indicate a high or low risk of disease spread.
+
+\chapter{Implementation Tools}
+\begin{itemize}
+\item Python
+\item TensorFlow / Keras
+\item Scikit-learn
+\item OpenCV
+\item Google Colab
+\end{itemize}
+
+\chapter{Results}
+The CNN model successfully classified leaf disease with high accuracy.  
+The Random Forest model provided reliable risk prediction based on real or synthetic weather data.
+
+\chapter{My Contribution (Integration \& Final Inference System)}
+My primary role in the project was to \textbf{integrate both trained models} and build a final prediction system that produces:
+\begin{itemize}
+\item Disease Name from Leaf Image (using CNN)
+\item Disease Risk Level from Weather Data (using Random Forest)
+\end{itemize}
+
+I developed the final Python script / Jupyter Notebook which:
+\begin{enumerate}
+\item Loaded the trained CNN model and weather model.
+\item Preprocessed user input leaf images for classification.
+\item Accepted real-time or manual weather inputs.
+\item Generated combined output showing:
+\begin{itemize}
+\item Detected Disease Name
+\item Probability / Confidence Level
+\item Risk Level (High/Low)
+\end{itemize}
+\end{enumerate}
+
+This integration allows users to input a leaf image and weather conditions, and receive a complete diagnosis and prediction in one step.
+
+\chapter{Conclusion}
+This project demonstrates that machine learning can greatly assist in early detection and prevention of crop diseases. By combining visual analysis and environmental risk prediction, the system enables proactive disease management, minimizing crop loss and improving agricultural efficiency. Future improvements may include deployment as a mobile app for real-time usage in farms.
+
+\end{document}
