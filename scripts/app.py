@@ -1,4 +1,3 @@
-%%writefile scripts/app.py
 import streamlit as st
 import numpy as np
 import cv2
@@ -9,9 +8,9 @@ st.set_page_config(page_title="Crop Disease & Weather Risk Predictor", page_icon
 
 st.title("🌾 Crop Disease & Weather Risk Prediction System")
 
-# Load models
-cnn_model = load_model("models/cnn_model.h5")
-weather_data = joblib.load("models/weather_model.pkl")
+# Load models (from root folder — not inside /models)
+cnn_model = load_model("cnn_model.h5")
+weather_data = joblib.load("weather_model.pkl")
 weather_model = weather_data["model"]
 
 uploaded_img = st.file_uploader("📸 Upload a leaf image", type=["jpg", "jpeg", "png"])
@@ -29,6 +28,7 @@ if st.button("Predict"):
         img = img / 255.0
         img = np.expand_dims(img, axis=0)
 
+        # Disease prediction
         pred = cnn_model.predict(img)
         disease_id = int(np.argmax(pred))
         confidence = round(100 * np.max(pred), 2)
@@ -38,5 +38,5 @@ if st.button("Predict"):
         risk_pred = weather_model.predict(weather_input)[0]
 
         st.subheader("🌿 Prediction Results")
-        st.write(f"*Disease Class ID:* {disease_id} ({confidence}% confidence)")
-        st.write(f"*Risk Level:* {'⚠ High' if risk_pred == 1 else '✅ Low'}")
+        st.write(f"**Disease Class ID:** {disease_id} ({confidence}% confidence)")
+        st.write(f"**Risk Level:** {'⚠️ High' if risk_pred == 1 else '✅ Low'}")
