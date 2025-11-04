@@ -1,0 +1,206 @@
+\documentclass[12pt,a4paper]{report}
+
+\usepackage{graphicx}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage{geometry}
+\usepackage{setspace}
+\usepackage{hyperref}
+\usepackage{times}
+\usepackage{float}
+
+\geometry{
+    top=1in,
+    bottom=1in,
+    left=1in,
+    right=1in
+}
+
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Crop Disease Detection Project}
+\lhead{Goa University}
+\cfoot{\thepage}
+
+\setstretch{1.3}
+
+\titleformat{\chapter}[block]{\bfseries\huge}{\thechapter.}{1em}{}
+\titleformat{\section}[block]{\bfseries\Large}{\thesection}{1em}{}
+
+\begin{document}
+
+% ----------------------------- TITLE PAGE -----------------------------
+\begin{titlepage}
+\centering
+\vspace*{2cm}
+
+{\Huge \textbf{Crop Disease Detection and Risk Prediction using CNN and Weather Data}}\\[1cm]
+
+{\Large \textbf{A Machine Learning Project Report}}\\[1.5cm]
+
+{\Large \textbf{Submitted by:}}\\[0.5cm]
+{\Large \textbf{Pranita Mandrekar}}\\[0.2cm]
+IMSc Data Science, 1st Year\\
+Department of Data Science\\
+Goa Business School, Goa University\\[1cm]
+
+{\Large \textbf{Under the Guidance of:}}\\[0.3cm]
+Prof. [Sanket Mhamal]\\
+Goa Business School, Goa University\\[1cm]
+
+\vfill
+\textbf{Date of Submission:} November 2025\\[0.3cm]
+\textbf{Academic Year:} 2025–26\\[0.5cm]
+
+\vfill
+\textbf{Goa Business School}\\
+Goa University\\
+Taleigao Plateau, Goa – 403206\\
+
+\end{titlepage}
+
+% ----------------------------- ABSTRACT -----------------------------
+\chapter*{Abstract}
+\addcontentsline{toc}{chapter}{Abstract}
+
+Agriculture plays a crucial role in the Indian economy, and plant diseases cause significant loss in yield and quality. Farmers often struggle to identify crop diseases at an early stage, leading to delayed actions and reduced productivity. This project focuses on the development of a hybrid Machine Learning system that combines image-based disease detection using Convolutional Neural Networks (CNN) with weather-based disease risk prediction using Random Forests. The system also integrates a user-friendly Streamlit interface for real-time predictions. By combining visual and environmental data, the project aims to provide farmers and researchers with an efficient, scalable, and intelligent crop disease diagnosis tool.
+
+% ----------------------------- INTRODUCTION -----------------------------
+\chapter{Introduction}
+
+The agricultural sector forms the backbone of India's economy. However, it faces numerous challenges, including pest attacks, nutrient deficiencies, and plant diseases. Timely identification and management of crop diseases can significantly improve yield and sustainability. 
+
+Traditional disease diagnosis relies heavily on manual inspection, which is time-consuming and often inaccurate. With advancements in Artificial Intelligence (AI) and Deep Learning (DL), particularly in Computer Vision, automated plant disease detection has become a reality.
+
+In this project, we integrate two dimensions of prediction:
+\begin{enumerate}
+    \item Image-based disease classification using a Convolutional Neural Network (CNN).
+    \item Weather-based risk assessment using a Random Forest model.
+\end{enumerate}
+
+The final model, deployed via a Streamlit dashboard, enables the user to upload a leaf image and select a location to predict both disease type and infection risk level.
+
+% ----------------------------- LITERATURE REVIEW -----------------------------
+\chapter{Literature Review}
+
+Several studies have been conducted on plant disease detection using deep learning models. Early works utilized traditional image processing techniques such as feature extraction using texture and color histograms. However, with the introduction of deep neural networks, models such as AlexNet, ResNet, and MobileNet have achieved high accuracy in plant disease classification.
+
+In 2018, the PlantVillage dataset was introduced, which became the benchmark for agricultural AI research. The dataset consists of over 50,000 images of healthy and diseased leaves across various plant species.
+
+Previous models, however, primarily focused on visual data. This project adds novelty by integrating meteorological data (temperature, humidity, rainfall, pressure, and wind speed) into the prediction process. By combining CNN-based image analysis with Random Forest-based environmental modeling, the system provides a holistic understanding of crop disease risk.
+
+% ----------------------------- METHODOLOGY PART 1 -----------------------------
+\chapter{Methodology (Part 1) — Dataset and Preprocessing}
+
+\section{Dataset Source}
+The dataset used for this project was obtained from Kaggle’s repository “\textit{Plant Disease Dataset}” by Emma Rex. It contains thousands of labeled images of crop leaves categorized into multiple disease classes, including tomato, potato, corn, and grape diseases.
+
+\section{Data Preprocessing}
+The raw images were downloaded directly using the Kaggle API in Google Colab. Preprocessing steps included:
+\begin{itemize}
+    \item Resizing all images to 224×224 pixels.
+    \item Splitting the dataset into 80\% training and 20\% testing.
+    \item Organizing images into respective subfolders for each class.
+\end{itemize}
+
+This process was automated through Python scripts and verified by visual inspection of random samples. The clean data folders were stored in the `/data/images/` directory of the GitHub repository.
+
+\section{Tools Used}
+The main tools used for this stage were:
+\begin{itemize}
+    \item Google Colab – for running preprocessing scripts and model training.
+    \item GitHub – for version control, collaboration, and code management.
+    \item Kaggle API – for automated dataset downloading.
+\end{itemize}
+
+% ----------------------------- METHODOLOGY PART 2 -----------------------------
+\chapter{Methodology (Part 2) — Model Development}
+
+\section{CNN Model for Image Classification}
+The CNN model was built using TensorFlow and Keras libraries. Transfer learning was applied using the MobileNetV2 architecture, pre-trained on ImageNet. The network was fine-tuned for crop disease classification with softmax output for multiple disease categories.
+
+The model was trained for 10 epochs, and the final model file was saved as \texttt{cnn\_model.h5}.
+
+\section{Weather Risk Prediction Model}
+A synthetic weather dataset was generated using Python’s random module to simulate environmental parameters such as temperature, humidity, rainfall, and pressure. The data was labeled as “High” or “Low” disease risk based on predefined conditions.
+
+A Random Forest Classifier was trained on this dataset to predict risk levels. The model was saved as \texttt{weather\_model.pkl}.
+
+% ----------------------------- INTEGRATION AND IMPLEMENTATION -----------------------------
+\chapter{Integration and Implementation}
+
+Both models were integrated into a single workflow using Python. The CNN model predicts the disease from the image, and the Random Forest model predicts the risk based on live weather data fetched from the OpenWeatherMap API.
+
+A Streamlit dashboard was created to make the system interactive. Users can:
+\begin{itemize}
+    \item Upload a crop leaf image.
+    \item Enter a city name.
+    \item View disease name, confidence score, and risk level.
+\end{itemize}
+
+This user interface enhances accessibility and practical use for farmers and agricultural analysts.
+
+% ----------------------------- RESULTS AND DISCUSSION -----------------------------
+\chapter{Results and Discussion}
+
+The CNN model achieved high accuracy in distinguishing healthy and diseased leaves. The weather model successfully predicted risk levels consistent with environmental patterns.
+
+Sample output:
+\begin{verbatim}
+Image Prediction: Tomato Bacterial Spot (Confidence: 0.91)
+Weather Data: {Temp: 30.4°C, Humidity: 85%, Pressure: 1002 hPa}
+Predicted Risk: High
+\end{verbatim}
+
+The integration of weather conditions improved contextual prediction, helping users understand both the current disease and the potential spread risk.
+
+% ----------------------------- YOUR CONTRIBUTION -----------------------------
+\chapter{Personal Contribution (Pranita Mandrekar)}
+
+As part of this group project, I contributed primarily to two major components — \textbf{data preprocessing} and \textbf{model integration}.
+
+\section{1. Image Preprocessing}
+\begin{itemize}
+    \item Downloaded and prepared the image dataset using Kaggle API.
+    \item Resized and split the dataset into training and testing sets using Python scripts.
+    \item Structured and verified folders in Google Colab for clean model input.
+\end{itemize}
+
+\section{2. Integration and Streamlit}
+\begin{itemize}
+    \item Worked on building the Streamlit dashboard interface for integrated predictions.
+    \item Connected the CNN image classifier and weather-based Random Forest model for joint inference.
+    \item Tested the system functionality to ensure smooth predictions.
+\end{itemize}
+
+\section{3. Collaboration Tools}
+\begin{itemize}
+    \item Used GitHub for version control, creating branches, pushing updates, and managing pull requests.
+    \item Utilized Google Colab for running all preprocessing and integration code collaboratively with teammates.
+\end{itemize}
+
+Through this, I learned to manage end-to-end ML workflows, integrate multi-model systems, and use professional tools for team-based projects.
+
+% ----------------------------- CONCLUSION AND FUTURE SCOPE -----------------------------
+\chapter{Conclusion and Future Scope}
+
+This project successfully demonstrates an end-to-end approach to crop disease diagnosis and risk prediction by integrating computer vision and environmental modeling. The results show that combining image and weather data improves overall prediction reliability.
+
+\section*{Future Scope}
+\begin{itemize}
+    \item Expanding the dataset with real-time field images and local sensor data.
+    \item Deploying the model as a mobile application for farmers.
+    \item Adding real-time alert systems for high-risk disease conditions.
+\end{itemize}
+
+% ----------------------------- REFERENCES -----------------------------
+\chapter*{References}
+\addcontentsline{toc}{chapter}{References}
+\begin{enumerate}
+    \item Mohanty, S. P., Hughes, D. P., \& Salathé, M. (2016). Using deep learning for image-based plant disease detection. \textit{Frontiers in Plant Science}.
+    \item Ferentinos, K. P. (2018). Deep learning models for plant disease detection and diagnosis. \textit{Computers and Electronics in Agriculture}.
+    \item Kaggle Dataset: \url{https://www.kaggle.com/datasets/emmarex/plantdisease}
+    \item OpenWeatherMap API: \url{https://openweathermap.org/api}
+\end{enumerate}
+
+\end{document}
