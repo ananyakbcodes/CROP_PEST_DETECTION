@@ -9,8 +9,9 @@ st.set_page_config(page_title="Crop Disease & Weather Risk Predictor", page_icon
 st.title("🌾 Crop Disease & Weather Risk Prediction System")
 
 # Load models (from root folder — not inside /models)
-cnn_model = load_model("cnn_model.h5")
-weather_data = joblib.load("weather_model.pkl")
+
+cnn_model = load_model("../cnn_model.h5")
+weather_data = joblib.load("../weather_model.pkl")
 weather_model = weather_data["model"]
 
 uploaded_img = st.file_uploader("📸 Upload a leaf image", type=["jpg", "jpeg", "png"])
