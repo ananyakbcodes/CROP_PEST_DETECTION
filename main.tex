@@ -1,0 +1,250 @@
+\documentclass[12pt,a4paper]{report}
+
+% ---------- PACKAGES ----------
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{setspace}
+\usepackage{titlesec}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{booktabs}
+\usepackage{xcolor}
+\usepackage{float}
+\usepackage{etoolbox}
+
+% Remove page breaks for each section (compact layout)
+\makeatletter
+\patchcmd{\@makechapterhead}{\vspace*{50\p@}}{}{}{}
+\patchcmd{\@makechapterhead}{\vspace*{40\p@}}{}{}{}
+\makeatother
+
+\setstretch{1.3}
+\titleformat{\chapter}[hang]{\normalfont\bfseries\LARGE}{\thechapter.}{1em}{}
+\renewcommand{\thesection}{\arabic{section}}
+\renewcommand{\baselinestretch}{1.25}
+
+\begin{document}
+
+% ---------- TITLE PAGE ----------
+\begin{titlepage}
+    \centering
+    
+    {\LARGE \textbf{Crop Disease Detection and Prediction Using Computer Vision and Environmental Data}}\\[1cm]
+    {\large \textbf{Submitted by:}}\\[0.5cm]
+    {\large \textbf{Ananya.K.Bijoy}}\\
+    {\normalsize Msci (Integrated) Data Science}\\[1cm]
+  
+    {\normalsize Goa Business School,Goa University}\\[1.5cm]
+    {\large Academic Year: 2025}\\[0.5cm]
+    \vfill
+\end{titlepage}
+
+% ---------- TABLE OF CONTENTS ----------
+\tableofcontents
+\newpage
+
+% ---------- ABSTRACT ----------
+\section*{Abstract}
+\addcontentsline{toc}{section}{Abstract}
+
+This project presents an integrated framework for early detection and prediction of crop diseases through the combined use of computer vision and environmental data. A Convolutional Neural Network (CNN) is employed to classify crop leaf images based on disease symptoms, while a Random Forest model utilizes weather data to predict conditions favorable for pest or disease outbreaks. The outputs from both models are integrated into a unified risk prediction pipeline, offering actionable insights to farmers and agricultural stakeholders. This approach aims to reduce yield losses, improve decision-making, and enhance food security through timely disease management and environmental forecasting.
+
+---
+
+\section{Problem Statement}
+
+Can we detect and predict the onset of crop diseases using leaf images and environmental data before the damage becomes too severe?
+
+Crop diseases are a major challenge to global food security. Many small-scale farmers experience heavy losses due to delayed diagnosis of infections caused by fungi, bacteria, or viruses. The lack of early detection mechanisms and reliable forecasting systems leads to reactive rather than preventive responses.
+
+This project leverages \textbf{computer vision} and \textbf{environmental modeling} to build an intelligent system capable of both identifying visible symptoms and forecasting disease-prone conditions, enabling proactive agricultural management.
+
+---
+
+\section{Objectives}
+
+\begin{enumerate}
+    \item Develop a computer vision model for accurate classification of crop diseases from leaf images.
+    \item Construct a weather-based predictive model to forecast the likelihood of disease occurrence.
+    \item Integrate both models into a single predictive system capable of real-time disease risk assessment.
+    \item Deploy the integrated system through a user-friendly dashboard for practical field use.
+\end{enumerate}
+
+---
+
+\section{Methodology}
+
+The project is structured into five primary stages: \textbf{data collection, preprocessing, model development, integration, and visualization.}
+
+\subsection{Data Collection}
+
+\begin{itemize}
+    \item \textbf{Leaf Image Data:} Acquired from the \textit{PlantVillage Dataset}, containing labeled images of healthy and diseased crop leaves.
+    \item \textbf{Environmental Data:} Weather parameters (temperature, humidity, rainfall, wind speed) collected via the \textit{OpenWeatherMap API}.
+\end{itemize}
+
+\subsection{Data Preprocessing}
+
+\begin{itemize}
+    \item Image normalization, resizing, and augmentation (rotation, flipping, scaling) for better generalization.
+    \item Removal of low-quality or mislabeled samples.
+    \item Standardization of weather data and imputation of missing values.
+\end{itemize}
+
+\subsection{Model Development}
+
+\textbf{Computer Vision Model (by Ananya):}
+\begin{itemize}
+    \item Designed and implemented a \textbf{Convolutional Neural Network (CNN)} for detecting and classifying pest-affected crops.
+    \item Used transfer learning via \textit{ResNet50} and \textit{MobileNetV2}.
+    \item Achieved validation accuracy of approximately \textbf{89\%}.
+\end{itemize}
+
+\textbf{Weather-Based Prediction Model:}
+\begin{itemize}
+    \item Developed a \textbf{Random Forest} model trained on historical weather data.
+    \item Predicted conditions favorable for pest or disease development.
+    \item Analyzed feature importance for climatic influence on pest outbreaks.
+\end{itemize}
+
+\subsection{Model Integration}
+
+\begin{itemize}
+    \item Combined the CNN and Random Forest models into a unified inference pipeline.
+    \item Generated a composite \textbf{Disease Risk Index}.
+\end{itemize}
+
+\subsection{Visualization and Deployment}
+
+\begin{itemize}
+    \item Developed an interactive \textbf{Streamlit dashboard}.
+    \item Displayed disease classification results and risk forecasts.
+\end{itemize}
+
+---
+
+\section{Dataset Description}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{@{}lll@{}}
+\toprule
+\textbf{Dataset} & \textbf{Description} & \textbf{Source} \\ \midrule
+PlantVillage & Labeled crop leaf images (healthy/diseased) & Kaggle \\
+OpenWeatherMap & Historical weather parameters & API \\
+Custom Field Data & Manually collected samples (optional) & Local \\ \bottomrule
+\end{tabular}
+\end{table}
+
+---
+
+\section{System Architecture}
+
+The architecture of the Integrated Crop Pest Detection System follows a modular, four-layer pipeline ensuring scalability and real-time usability:
+
+\begin{itemize}
+    \item \textbf{Data Acquisition Layer:} Collects leaf images and live meteorological data from APIs.
+    \item \textbf{Modeling Layer:} Contains two submodules – CNN for image analysis and Random Forest for environmental prediction.
+    \item \textbf{Integration Layer:} Merges outputs to generate unified pest risk predictions.
+    \item \textbf{Presentation Layer:} Streamlit-based dashboard enabling real-time visualization and predictions.
+\end{itemize}
+
+---
+
+\section{Results and Discussion}
+
+The CNN model achieved:
+\begin{itemize}
+    \item Training Accuracy: \textbf{92\%}
+    \item Validation Accuracy: \textbf{89\%}
+\end{itemize}
+
+The Random Forest model effectively linked pest outbreaks to humidity and temperature variations. Integration improved predictive reliability, enabling early warnings for potential disease outbreaks.
+
+---
+
+\section{Limitations and Challenges}
+
+\begin{itemize}
+    \item Limited dataset diversity may affect model generalization.
+    \item Environmental data accuracy depends on weather station coverage.
+    \item Real-time deployment requires optimization for latency.
+\end{itemize}
+
+---
+
+\section{Future Work}
+
+\begin{enumerate}
+    \item Integration with IoT-based agricultural sensors.
+    \item Expansion to additional crops and disease types.
+    \item Explainable AI for transparent decision-making.
+    \item Development of a multilingual mobile app.
+\end{enumerate}
+
+---
+
+\section{Tech Stack}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{@{}ll@{}}
+\toprule
+\textbf{Category} & \textbf{Tools and Frameworks} \\ \midrule
+Programming Language & Python \\
+Computer Vision & TensorFlow, PyTorch, OpenCV \\
+Machine Learning & Scikit-learn, XGBoost \\
+Visualization & Matplotlib, Seaborn, Streamlit \\
+APIs & PlantVillage Dataset, OpenWeatherMap \\
+Deployment & Streamlit, Flask, AWS/GCP \\ \bottomrule
+\end{tabular}
+\end{table}
+
+---
+
+\section{Team Contributions}
+
+\textbf{Ananya — CNN Model and Image Processing}
+\begin{itemize}
+    \item Designed, trained, and fine-tuned CNN model.
+    \item Handled preprocessing of pest-infected crop images.
+    \item Documented the implementation in \texttt{cnn\_model.ipynb}.
+\end{itemize}
+
+\textbf{Cassiel — Weather-Based Model}
+\begin{itemize}
+    \item Created Random Forest model using OpenWeatherMap API data.
+\end{itemize}
+
+\textbf{Aaliyah — Integration}
+\begin{itemize}
+    \item Integrated CNN and weather models into unified pipeline.
+\end{itemize}
+
+\textbf{Pranita — Streamlit Dashboard \& Preprocessing}
+\begin{itemize}
+    \item Designed frontend dashboard and assisted in image preprocessing.
+\end{itemize}
+
+---
+
+\section{Ethical Considerations}
+
+The system supports, not replaces, agricultural experts. Predictions are probabilistic and require expert validation. All datasets are ethically sourced and open access.
+
+---
+
+\section{References}
+
+\begin{enumerate}
+    \item Mohanty, S.P., Hughes, D.P., \& Salathé, M. (2016). Using Deep Learning for Image-Based Plant Disease Detection. \textit{Frontiers in Plant Science}.
+    \item OpenWeatherMap API – \url{https://openweathermap.org/api}
+    \item PlantVillage Dataset – \url{https://www.kaggle.com/datasets/emmarex/plantdisease}
+    \item Singh, U., et al. (2020). Machine Learning Approaches for Crop Disease Prediction Using Environmental Data. \textit{Journal of Agricultural Informatics}.
+\end{enumerate}
+
+---
+
+\section*{Acknowledgements}
+The author expresses sincere gratitude to the faculty of Goa Business School, Goa University, for their valuable guidance and mentorship throughout this project. Appreciation is also extended to open-source developers and researchers for providing datasets, APIs, and frameworks that made this study possible.
+
+\end{document}
